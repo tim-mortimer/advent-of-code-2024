@@ -21,6 +21,6 @@ class SimilarityScoreTest {
 
     @Test
     fun `example input`() {
-        assertEquals(31, calculateSimilarityScoreOfInputLists("/day1/part2/example.txt"))
+        assertEquals(31, calculateSimilarityScoreOfInputLists("/day1/example.txt"))
     }
 }

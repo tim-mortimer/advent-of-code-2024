@@ -36,7 +36,7 @@ class DifferenceBetweenListsTest {
 
     @Test
     fun `example input`() {
-        val exampleInputURI = "/day1/part1/example.txt"
+        val exampleInputURI = "/day1/example.txt"
 
         assertEquals(11, calculateDistanceBetweenInputLists(exampleInputURI))
     }
