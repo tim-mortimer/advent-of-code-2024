@@ -40,4 +40,13 @@ class SafeReportsTest {
     fun `reports that increase and decrease are unsafe`() {
         assertFalse(Report(4, 1, 2, 0).isSafe())
     }
+    
+    @Test
+    fun `reports that would be safe after removing one level are tolerably safe`() {
+        assertTrue(Report(0, 1, 1, 2).isTolerablySafe())
+        assertFalse(Report(0, 1, 5, 6).isTolerablySafe())
+        assertTrue(Report(4, 4, 2, 1).isTolerablySafe())
+        assertFalse(Report(4, 4, 0, -2).isTolerablySafe())
+        assertTrue(Report(4, 1, 2, 0).isTolerablySafe())
+    }
 }
