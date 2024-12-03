@@ -1,4 +1,4 @@
-package aoc2024.day2
+package aoc2024.day02
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse

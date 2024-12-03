@@ -1,4 +1,4 @@
-package aoc2024.day1
+package aoc2024.day01
 
 import kotlin.math.abs
 
@@ -8,11 +8,11 @@ fun main() {
 }
 
 fun part1() {
-    println(calculateDistanceBetweenInputLists("/day1/input.txt"))
+    println(calculateDistanceBetweenInputLists("/day01/input.txt"))
 }
 
 fun part2() {
-    println(calculateSimilarityScoreOfInputLists("/day1/input.txt"))
+    println(calculateSimilarityScoreOfInputLists("/day01/input.txt"))
 }
 
 fun calculateDistanceBetweenInputLists(uri: String) =

@@ -1,4 +1,4 @@
-package aoc2024.day2
+package aoc2024.day02
 
 fun main() {
     part1()
@@ -6,11 +6,11 @@ fun main() {
 }
 
 fun part1() {
-    println(readReports("/day2/input.txt")?.safeQuantity())
+    println(readReports("/day02/input.txt")?.safeQuantity())
 }
 
 fun part2() {
-    println(readReports("/day2/input.txt")?.tolerablySafeQuantity())
+    println(readReports("/day02/input.txt")?.tolerablySafeQuantity())
 }
 
 fun List<Report>.safeQuantity() = this.count { it.isSafe() }

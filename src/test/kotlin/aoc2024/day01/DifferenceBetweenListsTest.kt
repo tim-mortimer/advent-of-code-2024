@@ -1,4 +1,4 @@
-package aoc2024.day1
+package aoc2024.day01
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -36,7 +36,7 @@ class DifferenceBetweenListsTest {
 
     @Test
     fun `example input`() {
-        val exampleInputURI = "/day1/example.txt"
+        val exampleInputURI = "/day01/example.txt"
 
         assertEquals(11, calculateDistanceBetweenInputLists(exampleInputURI))
     }

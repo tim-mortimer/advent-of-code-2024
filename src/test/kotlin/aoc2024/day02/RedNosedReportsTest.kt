@@ -1,4 +1,4 @@
-package aoc2024.day2
+package aoc2024.day02
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -13,11 +13,11 @@ class RedNosedReportsTest {
 
     @Test
     fun `example input for counting safe reports`() {
-        assertEquals(2, readReports("/day2/example.txt")?.safeQuantity())
+        assertEquals(2, readReports("/day02/example.txt")?.safeQuantity())
     }
 
     @Test
     fun `example input for counting tolerably safe reports`() {
-        assertEquals(4, readReports("/day2/example.txt")?.tolerablySafeQuantity())
+        assertEquals(4, readReports("/day02/example.txt")?.tolerablySafeQuantity())
     }
 }

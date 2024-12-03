@@ -1,4 +1,4 @@
-package aoc2024.day1
+package aoc2024.day01
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -21,6 +21,6 @@ class SimilarityScoreTest {
 
     @Test
     fun `example input`() {
-        assertEquals(31, calculateSimilarityScoreOfInputLists("/day1/example.txt"))
+        assertEquals(31, calculateSimilarityScoreOfInputLists("/day01/example.txt"))
     }
 }
