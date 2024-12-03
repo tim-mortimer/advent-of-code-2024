@@ -5,15 +5,17 @@ fun main() {
 }
 
 fun part1() {
-    println(sumProducts(readFileToList("/day03/input.txt")))
+    println(readFileToList("/day03/input.txt").evaluateMulOperations())
 }
 
-fun sumProducts(input: List<String>): Long {
-    val regex = """mul\(([0-9]{1,3}),([0-9]{1,3})\)""".toRegex()
-    return input.map { line -> regex.findAll(line).toList() }
-        .flatten()
-        .sumOf {it.destructured.let { (a, b) -> a.toLong() * b.toLong() } }
-}
+fun List<String>.evaluateMulOperations() = this.joinToString("").evaluateMulOperations()
+
+fun String.evaluateMulOperations() = """mul\(([0-9]{1,3}),([0-9]{1,3})\)"""
+    .toRegex()
+    .findAll(this)
+    .sumOf {
+        it.destructured.let { (a, b) -> a.toLong() * b.toLong() }
+    }
 
 fun readFileToList(input: String) = ({}.javaClass.getResource(input)
     ?.readText()
