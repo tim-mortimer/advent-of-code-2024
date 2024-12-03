@@ -43,6 +43,22 @@ class MulInstructionsTest {
 
     @Test
     fun `example input`() {
-        assertEquals(161, readFileToList("/day03/example.txt").evaluateMulOperations())
+        assertEquals(161, readFileToList("/day03/example_part01.txt").evaluateMulOperations())
+    }
+
+    @Test
+    fun `evaluate a simple string with conditionals`() {
+        assertEquals(0, "don't()do()".evaluateMulOperationsWithConditionals())
+        assertEquals(0, "don't()mul(1,2)do()".evaluateMulOperationsWithConditionals())
+        assertEquals(0, "don't()mul(1,2)do()".evaluateMulOperationsWithConditionals())
+        assertEquals(2, "mul(1,2)don't()mul(3,4)".evaluateMulOperationsWithConditionals())
+        assertEquals(10, "mul(1,2)don't()mul(3,4)do()mul(2,4)".evaluateMulOperationsWithConditionals())
+        assertEquals(11, "mul(1,2)don't()mul(3,4)do()mul(1,1)don't()do()mul(2,4)".evaluateMulOperationsWithConditionals())
+        assertEquals(3, "mul(1,2)don't()mul(3,4)do()mul(1,1)don't()mul(2,4)".evaluateMulOperationsWithConditionals())
+    }
+
+    @Test
+    fun `example input with conditionals`() {
+        assertEquals(48, readFileToList("/day03/example_part02.txt").evaluateMulOperationsWithConditionals())
     }
 }
