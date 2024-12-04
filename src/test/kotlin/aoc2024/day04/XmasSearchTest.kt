@@ -9,6 +9,13 @@ class XmasSearchTest {
     fun `example input for xmas search`() {
         val input = readFileToList("/day04/example.txt")
 
-        assertEquals(18, countXmas(input))
+        assertEquals(18, input.xmasCount())
+    }
+
+    @Test
+    fun `example input for x-mas search`() {
+        val input = readFileToList("/day04/example.txt")
+
+        assertEquals(9, input.xMasCount())
     }
 }

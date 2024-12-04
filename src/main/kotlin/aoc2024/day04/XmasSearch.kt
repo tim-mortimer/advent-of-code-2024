@@ -6,14 +6,31 @@ typealias LetterGrid = List<String>
 
 fun main() {
     part1()
+    part2()
 }
 
 fun part1() {
-    println(countXmas(readFileToList("/day04/input.txt")))
+    println(readFileToList("/day04/input.txt").xmasCount())
 }
 
-fun countXmas(input: LetterGrid) = input.allStrings()
+fun part2() {
+    println(readFileToList("/day04/input.txt").xMasCount())
+}
+
+fun LetterGrid.xmasCount() = allStrings()
     .sumOf { "XMAS".toRegex().findAll(it).count() + "SAMX".toRegex().findAll(it).count() }
+
+fun LetterGrid.xMasCount(): Int {
+    var count = 0
+
+    (1..<(width() - 1)).forEach { rowIndex ->
+        (1..<(height() - 1)).forEach { columnIndex ->
+            if (hasXMasCentredAt(rowIndex, columnIndex)) count += 1
+        }
+    }
+
+    return count
+}
 
 private fun LetterGrid.allStrings() = verticalStrings() +
         horizontalStrings() +
@@ -72,6 +89,13 @@ private fun LetterGrid.downwardsDiagonalStringsFromLeft() = (0..<height()).toLis
 
 private fun LetterGrid.height() = size
 private fun LetterGrid.width() = this[0].length
+
+private fun LetterGrid.hasXMasCentredAt(rowIndex: Int, columnIndex: Int): Boolean {
+    val downwardsDiagonal = "${this[rowIndex - 1][columnIndex - 1]}${this[rowIndex][columnIndex]}${this[rowIndex + 1][columnIndex + 1]}"
+    val upwardsDiagonal = "${this[rowIndex + 1][columnIndex - 1]}${this[rowIndex][columnIndex]}${this[rowIndex - 1][columnIndex + 1]}"
+    val searchTerms = listOf("MAS", "SAM")
+    return searchTerms.contains(downwardsDiagonal) && searchTerms.contains(upwardsDiagonal)
+}
 
 fun readFileToList(input: String) = ({}.javaClass.getResource(input)
     ?.readText()
