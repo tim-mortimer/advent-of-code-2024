@@ -6,12 +6,17 @@ val pageOrderRegex = """\d+\|\d+""".toRegex()
 
 fun main() {
     part1()
+    part2()
 }
 
 fun part1() {
     val input = readFileToList("/day05/input.txt")
-
     println(sumMiddlePageNumbersOfCorrectUpdates(input.pageOrderingRules(), input.updates()))
+}
+
+fun part2() {
+    val input = readFileToList("/day05/input.txt")
+    println(sumMiddlePageNumbersOfCorrectedUpdates(input.pageOrderingRules(), input.updates()))
 }
 
 fun List<String>.pageOrderingRules() = filter { it.matches(pageOrderRegex) }
@@ -43,3 +48,14 @@ private fun List<Int>.compliesWith(pageOrderingRules: Map<Int, List<Int>>) =
     }.all { it }
 
 private fun List<Int>.middlePageNumber() = this[(this.size / 2)]
+
+fun sumMiddlePageNumbersOfCorrectedUpdates(
+    pageOrderingRules: Map<Int, List<Int>>,
+    updates: List<List<Int>>
+) = updates.filterNot { it.compliesWith(pageOrderingRules) }
+    .map { it.sortedAccordingTo(pageOrderingRules) }
+    .sumOf { it.middlePageNumber() }
+
+private fun List<Int>.sortedAccordingTo(pageOrderingRules: Map<Int, List<Int>>) = sortedWith { a, b ->
+    if (pageOrderingRules[b]?.contains(a) == true) -1 else if (pageOrderingRules[a]?.contains(b) == true) 1 else 0
+}

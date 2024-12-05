@@ -9,7 +9,12 @@ class PrintQueueTest {
     @Test
     fun `example input for print queue`() {
         val input = readFileToList("/day05/example.txt")
-
         assertEquals(143, sumMiddlePageNumbersOfCorrectUpdates(input.pageOrderingRules(), input.updates()))
+    }
+
+    @Test
+    fun `example input for correct incorrect updates`() {
+        val input = readFileToList("/day05/example.txt")
+        assertEquals(123, sumMiddlePageNumbersOfCorrectedUpdates(input.pageOrderingRules(), input.updates()))
     }
 }
