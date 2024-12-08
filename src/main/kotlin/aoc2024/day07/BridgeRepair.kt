@@ -55,7 +55,7 @@ data class Equation(val testValue: Long, val operands: List<Int>) {
             '0' -> Add
             '1' -> Multiply
             '2' -> Concatenate
-            else -> error("Invalid binary digit $digit")
+            else -> error("Invalid digit $digit")
         }
     }
 
