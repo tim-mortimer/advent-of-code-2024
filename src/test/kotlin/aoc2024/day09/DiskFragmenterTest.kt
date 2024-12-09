@@ -5,9 +5,14 @@ import kotlin.test.assertEquals
 
 class DiskFragmenterTest {
     @Test
-    fun `example input`() {
+    fun `part 1 example input`() {
         val result = compactFileBlockByBlock(expandDiskMap("2333133121414131402"))
-        assertEquals("0099811188827773336446555566".toList().map { it.toString() }, result)
-        assertEquals(1928, result.checksum().toInt())
+        assertEquals(1928, result.checksum())
+    }
+
+    @Test
+    fun `part 2 example input`() {
+        val result = compactFileFileByFile(expandDiskMap("2333133121414131402"))
+        assertEquals(2858, result.checksum())
     }
 }
