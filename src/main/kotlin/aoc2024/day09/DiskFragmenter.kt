@@ -7,10 +7,8 @@ fun main() {
 }
 
 fun part1() {
-    println(defrag(readFileToList("/day09/input.txt")[0]).checksum())
+    println(compactFileBlockByBlock(expandDiskMap(readFileToList("/day09/input.txt")[0])).checksum())
 }
-
-fun defrag(diskMap: String) = compactFile(expandDiskMap(diskMap))
 
 fun expandDiskMap(diskMap: String): List<String> = diskMap.flatMapIndexed { index, blockSize ->
     when {
@@ -19,11 +17,11 @@ fun expandDiskMap(diskMap: String): List<String> = diskMap.flatMapIndexed { inde
     }
 }
 
-tailrec fun compactFile(fileBlocks: List<String>, startingWith: List<String> = emptyList()): List<String> = when {
+tailrec fun compactFileBlockByBlock(fileBlocks: List<String>, startingWith: List<String> = emptyList()): List<String> = when {
     fileBlocks.none { it == "." } -> startingWith + fileBlocks
     else -> {
         val firstFreeSpaceIndex = fileBlocks.indexOf(".")
-        compactFile(
+        compactFileBlockByBlock(
             fileBlocks.drop(firstFreeSpaceIndex + 1).dropLast(1).dropLastWhile { it == "." },
             startingWith + fileBlocks.subList(0, firstFreeSpaceIndex) + fileBlocks.last()
         )
