@@ -10,4 +10,10 @@ class ResonanceTest {
         val input = readFileToList("/day08/example.txt")
         assertEquals(14, input.toGrid().uniqueAntinodeLocations(Pair<Location, Location>::part1Antinodes).size)
     }
+
+    @Test
+    fun `part 2 example`() {
+        val input = readFileToList("/day08/example.txt")
+        assertEquals(34, input.toGrid().uniqueAntinodeLocations(Pair<Location, Location>::part2Antinodes).size)
+    }
 }

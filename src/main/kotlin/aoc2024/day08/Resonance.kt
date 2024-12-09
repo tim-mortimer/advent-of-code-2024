@@ -6,18 +6,25 @@ private typealias Frequency = Char
 
 fun main() {
     part1()
+    part2()
 }
 
 fun part1() {
-    val grid = readFileToList("/day08/input.txt").filter { it != "" }.toGrid()
+    val grid = readFileToList("/day08/input.txt").toGrid()
     println(grid.uniqueAntinodeLocations(Pair<Location, Location>::part1Antinodes).size)
 }
 
-fun List<String>.toGrid(): Grid {
-    val width = this[0].length
-    val height = this.size
+fun part2() {
+    val grid = readFileToList("/day08/input.txt").toGrid()
+    println(grid.uniqueAntinodeLocations(Pair<Location, Location>::part2Antinodes).size)
+}
 
-    val frequencyToLocations = this.flatMapIndexed { y, row ->
+fun List<String>.toGrid(): Grid {
+    val cleaned = this.filter { it != "" }
+    val width = cleaned[0].length
+    val height = cleaned.size
+
+    val frequencyToLocations = cleaned.flatMapIndexed { y, row ->
         row.mapIndexed { x, frequency ->
             frequency to Location(x, y)
         }
@@ -36,13 +43,14 @@ data class Grid(
     val height: Int,
     val antennas: Map<Frequency, List<Location>>,
 ) {
-    fun uniqueAntinodeLocations(antinodes: Pair<Location, Location>.() -> List<Location>) =
+    fun uniqueAntinodeLocations(antinodes: Pair<Location, Location>.(grid: Grid) -> List<Location>) =
         pairwiseAntennas()
-            .mapValues { it.value.flatMap { it.antinodes() } }
+            .mapValues { it.value.flatMap { antennaPair -> antennaPair.antinodes(this) } }
             .values
             .flatten()
-            .filter(this::contains)
             .toSet()
+
+    fun contains(location: Location) = location.x in 0..<width && location.y in 0..<height
 
     private fun pairwiseAntennas(): Map<Frequency, List<Pair<Location, Location>>> {
         return antennas.mapValues { entry ->
@@ -51,14 +59,33 @@ data class Grid(
             }
         }
     }
-
-    private fun contains(location: Location) = location.x in 0..<width && location.y in 0..<height
 }
 
-fun Pair<Location, Location>.part1Antinodes() = listOf(
-    Location(this.first.x - gradient().first, this.first.y - gradient().second),
-    Location(this.second.x + gradient().first, this.second.y + gradient().second)
-)
+fun Pair<Location, Location>.part1Antinodes(grid: Grid) = listOf(
+    this.first - gradient(),
+    this.second + gradient()
+).filter { grid.contains(it) }
+
+fun Pair<Location, Location>.part2Antinodes(grid: Grid): List<Location> {
+    val antinodes: MutableList<Location> = mutableListOf()
+
+    var currentLocation = this.second
+    while (grid.contains(currentLocation)) {
+        antinodes += currentLocation
+        currentLocation += gradient()
+    }
+
+    currentLocation = this.first
+    while (grid.contains(currentLocation)) {
+        antinodes += currentLocation
+        currentLocation -= gradient()
+    }
+
+    return antinodes
+}
+
+operator fun Location.plus(gradient: Pair<Int, Int>) = Location(this.x + gradient.first, this.y + gradient.second)
+operator fun Location.minus(gradient: Pair<Int, Int>) = Location(this.x - gradient.first, this.y - gradient.second)
 
 private fun Pair<Location, Location>.gradient() = (second.x - first.x) to (second.y - first.y)
 
