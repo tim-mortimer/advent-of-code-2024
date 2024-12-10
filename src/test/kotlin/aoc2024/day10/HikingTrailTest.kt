@@ -6,11 +6,12 @@ import kotlin.test.assertEquals
 
 class HikingTrailTest {
     @Test
-    fun `part 1 example input`() {
+    fun `example input`() {
         val input = readFileToList("/day10/example.txt").filter { it != "" }
         val trails = findTrails(input)
         assertEquals(9, trails.keys.size)
-        assertEquals(36, trails.totalScore())
+        assertEquals(36, trails.reachableNineHeightPositions())
+        assertEquals(81, trails.distinctHikingTrails())
     }
 
     @Test

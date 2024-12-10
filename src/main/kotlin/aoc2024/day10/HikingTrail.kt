@@ -5,11 +5,17 @@ import kotlin.math.abs
 
 fun main() {
     part1()
+    part2()
 }
 
 fun part1() {
     val input = readFileToList("/day10/input.txt").filter { it != "" }
-    println(findTrails(input).totalScore())
+    println(findTrails(input).reachableNineHeightPositions())
+}
+
+fun part2() {
+    val input = readFileToList("/day10/input.txt").filter { it != "" }
+    println(findTrails(input).distinctHikingTrails())
 }
 
 fun findTrails(input: List<String>) = input.positions()
@@ -31,13 +37,19 @@ private fun trailsFrom(position: Position, positions: List<Position>): List<Trai
     }
 }
 
-fun Map<Point, List<Trail>>.totalScore() = this.values.sumOf(List<Trail>::score)
+fun Map<Point, List<Trail>>.reachableNineHeightPositions() =
+    this.values.sumOf(List<Trail>::reachableNineHeightPositions)
 
-private fun List<Trail>.score() =
+fun Map<Point, List<Trail>>.distinctHikingTrails() = this.values.sumOf(List<Trail>::distinctHikingTrails)
+
+private fun List<Trail>.reachableNineHeightPositions() =
     filter { trail -> trail.any { position -> position.height == 9 } }
         .groupBy { trail -> trail.find { position -> position.height == 9 } }
         .keys
         .size
+
+private fun List<Trail>.distinctHikingTrails() =
+    filter { trail -> trail.any { position -> position.height == 9 } }.size
 
 typealias Trail = List<Position>
 
