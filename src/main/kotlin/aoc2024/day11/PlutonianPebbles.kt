@@ -2,27 +2,41 @@ package aoc2024.day11
 
 fun main() {
     part1()
+    part2()
 }
 
 fun part1() {
-    println(blinkAt("9759 0 256219 60 1175776 113 6 92833".toLongs(), 25).size)
+    println(blinkAt("9759 0 256219 60 1175776 113 6 92833".toEngravings(), 25))
 }
 
-fun String.toLongs() = this.split(" ").map { it.toLong() }
-
-tailrec fun blinkAt(input: List<Long>, times: Int): List<Long> = when {
-    times == 0 -> input
-    else -> blinkAt(input.flatMap { change(it) }, times - 1)
+fun part2() {
+    println(blinkAt("9759 0 256219 60 1175776 113 6 92833".toEngravings(), 75))
 }
 
-fun change(engraving: Long): List<Long> {
-    val length = engraving.toString().length
+typealias Engraving = Long
+
+fun String.toEngravings() = this.split(" ").map { it.toLong() }
+
+fun blinkAt(input: List<Engraving>, times: Int): Long {
+    return input.fold(0) { count, item -> count + blinkAt(item, times) }
+}
+
+fun blinkAt(engraving: Engraving, times: Int = 1): Long {
+    if (engravingCache[(engraving to times)] != null) return engravingCache[engraving to times]!!
+
     return when {
-        engraving == 0L -> listOf(1)
-        length % 2 == 0 -> listOf(
-            engraving.toString().take(length / 2).toLong(),
-            engraving.toString().takeLast(length / 2).toLong()
-        )
-        else -> listOf(engraving * 2024)
-    }
+        times == 0 -> 1
+        else -> blinkAt(engraving.change(), times - 1)
+    }.also { engravingCache[engraving to times] = it }
+}
+
+val engravingCache = mutableMapOf<Pair<Engraving, Int>, Long>()
+
+fun Engraving.change() = when {
+    this == 0L -> listOf(1L)
+    toString().length % 2 == 0 -> listOf(
+        toString().take(toString().length / 2).toLong(),
+        toString().takeLast(toString().length / 2).toLong()
+    )
+    else -> listOf(this * 2024)
 }
